@@ -4,8 +4,11 @@ namespace GetSky\Phalcon\Provider;
 use GetSky\Phalcon\AutoloadServices\Provider;
 use Phalcon\Config;
 use Phalcon\Mvc\Router;
-use Phalcon\Mvc\Router as PhRouter;
 
+/**
+ * Class RouterProvider
+ * @package GetSky\Phalcon\Provider
+ */
 class RouterProvider implements Provider
 {
 
@@ -14,13 +17,16 @@ class RouterProvider implements Provider
      */
     private $options;
 
+    /**
+     * @param Config $options
+     */
     public function __construct(Config $options)
     {
         $this->options = $options;
     }
 
     /**
-     * @return mixed
+     * @return callable
      */
     public function getServices()
     {
@@ -29,7 +35,7 @@ class RouterProvider implements Provider
 
         return function () use ($default, $modules) {
 
-            $router = new PhRouter();
+            $router = new Router();
             $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI);
 
             foreach ($modules as $name => $module) {

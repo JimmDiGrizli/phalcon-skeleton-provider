@@ -5,6 +5,10 @@ use GetSky\Phalcon\AutoloadServices\Provider;
 use Phalcon\Config;
 use Phalcon\Mvc\Url;
 
+/**
+ * Class UrlProvider
+ * @package GetSky\Phalcon\Provider
+ */
 class UrlProvider implements Provider
 {
 
@@ -13,13 +17,16 @@ class UrlProvider implements Provider
      */
     private $options;
 
+    /**
+     * @param Config $options
+     */
     public function __construct(Config $options)
     {
         $this->options = $options;
     }
 
     /**
-     * @return mixed
+     * @return callable
      */
     public function getServices()
     {
