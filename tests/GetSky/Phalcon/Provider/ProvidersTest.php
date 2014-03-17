@@ -1,5 +1,6 @@
 <?php
 
+use GetSky\Phalcon\Provider\DispatcherProvider;
 use GetSky\Phalcon\Provider\RouterProvider;
 use GetSky\Phalcon\Provider\SessionProvider;
 use GetSky\Phalcon\Provider\UrlProvider;
@@ -11,16 +12,30 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
 
     public function testIsProvider()
     {
-        $router = new RouterProvider(new Config(
-            array(
-                "app"=>array("def_module"=>"frontend"),
-                "modules"=>array("frontend"=>"frontend")
+        $router = new RouterProvider(
+            new Config(
+                [
+                    "app" => ["def_module" => "frontend"],
+                    "modules" => ["frontend" => "frontend"]
+                ]
             )
-        )
         );
         $session = new SessionProvider();
         $url = new UrlProvider(
-            new Config(array("app"=>array("base_uri"=>"index")))
+            new Config(["app" => ["base_uri" => "index"]])
+        );
+        $dispatcher = new DispatcherProvider(
+            new Config(
+                [
+                    "errors" => [
+                        "404" => [
+                            "controller" => "test",
+                            "action" => "test"
+                        ]
+                    ]
+                ]
+            ),
+            '/GetSky/TestControllers/'
         );
 
         $this->assertInstanceOf(
@@ -38,6 +53,11 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
             $url
         );
 
+        $this->assertInstanceOf(
+            'GetSky\Phalcon\AutoloadServices\Provider',
+            $dispatcher
+        );
+
         $service = $url->getServices();
         /**
          * @var $url Url
@@ -51,6 +71,8 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
         $service = $router->getServices();
         $this->assertInstanceOf('\Phalcon\Mvc\Router', $service());
 
-    }
+        $service = $dispatcher->getServices();
+        $this->assertInstanceOf('\Phalcon\Mvc\Dispatcher', $service());
 
-} 
+    }
+}
