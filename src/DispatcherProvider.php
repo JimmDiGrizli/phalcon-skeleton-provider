@@ -72,4 +72,4 @@ class DispatcherProvider implements Provider
             return $dispatcher;
         };
     }
-} 
+}
