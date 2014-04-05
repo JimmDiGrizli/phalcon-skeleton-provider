@@ -1,6 +1,7 @@
 <?php
 
 use GetSky\Phalcon\Provider\DispatcherProvider;
+use GetSky\Phalcon\Provider\LoggerProvider;
 use GetSky\Phalcon\Provider\RouterProvider;
 use GetSky\Phalcon\Provider\SessionProvider;
 use GetSky\Phalcon\Provider\UrlProvider;
@@ -38,6 +39,18 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
             '/GetSky/TestControllers/'
         );
 
+        $logger = new LoggerProvider(
+            new Config(
+                [
+                    "logger" => [
+                        'adapter' => '\Phalcon\Logger\Adapter\File',
+                        'path' => 'error.log',
+                        'format' => '[%date%][%type%] %message%'
+                    ]
+                ]
+            )
+        );
+
         $this->assertInstanceOf(
             'GetSky\Phalcon\AutoloadServices\Provider',
             $router
@@ -58,6 +71,11 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
             $dispatcher
         );
 
+        $this->assertInstanceOf(
+            'GetSky\Phalcon\AutoloadServices\Provider',
+            $logger
+        );
+
         $service = $url->getServices();
         /**
          * @var $url Url
@@ -73,6 +91,9 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
 
         $service = $dispatcher->getServices();
         $this->assertInstanceOf('\Phalcon\Mvc\Dispatcher', $service());
+
+        $service = $logger->getServices();
+        $this->assertInstanceOf('\Phalcon\Logger\Adapter\File', $service());
 
     }
 }
