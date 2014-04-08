@@ -58,7 +58,7 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
                 [
                     "translation" => [
                         'base' => 'ru',
-                        'dir' => '\\tests\\',
+                        'dir' => '..\\..\\tests\\',
                         'ru' => 'ru.ini',
                         'en' => 'en.ini'
                     ]
