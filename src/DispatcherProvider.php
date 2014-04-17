@@ -21,6 +21,10 @@ class DispatcherProvider implements Provider
      * @var string
      */
     private $baseNamespace;
+    /**
+     * @var array
+     */
+    private $events;
 
     /**
      * @param Config $options
@@ -31,6 +35,13 @@ class DispatcherProvider implements Provider
         $this->options = $options;
         $this->baseNamespace = $baseNamespace;
     }
+
+    public function addEvents($name, $ceil, $event) {
+        $this->events[$name] = [$ceil, $event];
+    }
+
+    public function deleteEvents($name) {
+        unset($this->events[$name]);    }
 
     /**
      * @return callable
@@ -65,6 +76,10 @@ class DispatcherProvider implements Provider
                     return false;
                 }
             );
+
+            foreach ($this->events as $event) {
+                $eventsManager->attach($event[0], $event[1]);
+            }
 
             $dispatcher = new Dispatcher();
             $dispatcher->setEventsManager($eventsManager);
