@@ -1,5 +1,5 @@
 <?php
-namespace  GetSky\Phalcon\Provider;
+namespace GetSky\Phalcon\Provider;
 
 use Exception;
 use GetSky\Phalcon\AutoloadServices\Provider;
@@ -36,12 +36,15 @@ class DispatcherProvider implements Provider
         $this->baseNamespace = $baseNamespace;
     }
 
-    public function addEvents($name, $ceil, $event) {
+    public function addEvent($name, $ceil, $event)
+    {
         $this->events[$name] = [$ceil, $event];
     }
 
-    public function deleteEvents($name) {
-        unset($this->events[$name]);    }
+    public function deleteEvent($name)
+    {
+        unset($this->events[$name]);
+    }
 
     /**
      * @return callable
@@ -77,8 +80,10 @@ class DispatcherProvider implements Provider
                 }
             );
 
-            foreach ($this->events as $event) {
-                $eventsManager->attach($event[0], $event[1]);
+            if ($this->events !== null) {
+                foreach ($this->events as $event) {
+                    $eventsManager->attach($event[0], $event[1]);
+                }
             }
 
             $dispatcher = new Dispatcher();
