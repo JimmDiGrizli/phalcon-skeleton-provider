@@ -51,7 +51,7 @@ class DispatcherProvider implements Provider
      */
     public function getServices()
     {
-        $option = $this->options->get('errors')->get('404');
+        $option = $this->options->get('errors')->get('e404');
         $baseNamespace = $this->baseNamespace;
 
         return function () use ($option, $baseNamespace) {
