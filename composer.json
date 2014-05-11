@@ -15,7 +15,8 @@
         "ext-phalcon": ">=1.2.4,<2",
 
         "getsky/phalcon-autoload-services": "1.1.*",
-        "getsky/phalcon-config-loader": "1.0.*"
+        "getsky/phalcon-config-loader": "1.0.*",
+        "getsky/phalcon-bootstrap": "1.2.*"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
