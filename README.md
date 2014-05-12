@@ -1,4 +1,4 @@
-Providers for Phalcon [![Build Status](https://travis-ci.org/JimmDiGrizli/phalcon-skeleton-provider.png?branch=develop)](https://travis-ci.org/JimmDiGrizli/phalcon-skeleton-provider)
+Providers for Pherlin [![Build Status](https://travis-ci.org/JimmDiGrizli/phalcon-skeleton-provider.png?branch=develop)](https://travis-ci.org/JimmDiGrizli/phalcon-skeleton-provider)
 ======================
 
 This project contains the service providers for [Pherlin](https://travis-ci.org/JimmDiGrizli/pherlin). 
