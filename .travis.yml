@@ -5,6 +5,7 @@ before_script:
   - ./tests/install-php-extension.sh
   - composer self-update
   - composer update --dev
+  - mysql -e 'create database pherlin;'
 
 php:
   - 5.4

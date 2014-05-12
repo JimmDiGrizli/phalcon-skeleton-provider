@@ -3,13 +3,16 @@
 use GetSky\Phalcon\ConfigLoader\ConfigLoader;
 use GetSky\Phalcon\Provider\DispatcherProvider;
 use GetSky\Phalcon\Provider\LoggerProvider;
+use GetSky\Phalcon\Provider\MultipleCacheProvider;
+use GetSky\Phalcon\Provider\MySqlProvider;
 use GetSky\Phalcon\Provider\RouterProvider;
 use GetSky\Phalcon\Provider\SessionProvider;
 use GetSky\Phalcon\Provider\TranslationProvider;
 use GetSky\Phalcon\Provider\UrlProvider;
+use GetSky\Phalcon\Provider\ViewCacheProvider;
+use GetSky\Phalcon\Provider\ViewProvider;
 use Phalcon\Config;
 use Phalcon\Mvc\Url;
-
 
 class ProvidersTest  extends PHPUnit_Framework_TestCase {
 
@@ -68,6 +71,69 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
             'ru'
         );
 
+        $multiple = new MultipleCacheProvider(
+            new Config(
+                [
+                    "cache" => [
+                        'prefix' => 'cache',
+                        'host' => 'localhost',
+                        'port' => '65000',
+                        'path' => '/cache/'
+                    ]
+                ]
+            )
+        );
+
+        $mysql = new MySqlProvider(
+            new Config(
+                [
+                    "db" => [
+                        'mysql' => [
+                            'name' => 'pherlin'
+                        ]
+                    ]
+                ]
+            )
+        );
+
+        $voltCache = new ViewCacheProvider(
+            new Config(
+                [
+                    "modules" => [
+                        'TestModule' => [
+                            'config' => [
+                                'viewCache' => [
+                                    'path' => '/cacheVolt/'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ),
+            'TestModule'
+        );
+
+        $view = new ViewProvider(
+            new Config(
+                [
+                    "bootstrap" => [
+                        "module" => 'Module.php'
+                    ],
+                    "modules" => [
+                        'TestModule' => [
+                            'namespace' => "TestModule",
+                            'config' => [
+                                'view' => [
+                                    'path' => '/view/'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ),
+            'TestModule'
+        );
+
         $this->assertInstanceOf(
             'GetSky\Phalcon\AutoloadServices\Provider',
             $router
@@ -98,6 +164,26 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
             $translate
         );
 
+        $this->assertInstanceOf(
+            'GetSky\Phalcon\AutoloadServices\Provider',
+            $multiple
+        );
+
+        $this->assertInstanceOf(
+            'GetSky\Phalcon\AutoloadServices\Provider',
+            $mysql
+        );
+
+        $this->assertInstanceOf(
+            'GetSky\Phalcon\AutoloadServices\Provider',
+            $voltCache
+        );
+
+        $this->assertInstanceOf(
+            'GetSky\Phalcon\AutoloadServices\Provider',
+            $view
+        );
+
         $service = $url->getServices();
         /**
          * @var $url Url
@@ -120,5 +206,16 @@ class ProvidersTest  extends PHPUnit_Framework_TestCase {
         $service = $translate->getServices();
         $this->assertInstanceOf('\Phalcon\Translate\Adapter\NativeArray', $service());
 
+        $service = $multiple->getServices();
+        $this->assertInstanceOf('\Phalcon\Cache\Multiple', $service());
+
+        $service = $mysql->getServices();
+        $this->assertInstanceOf('\Phalcon\Db\Adapter\Pdo\MySql', $service());
+
+        $service = $voltCache->getServices();
+        $this->assertInstanceOf('\Phalcon\Cache\Backend\File', $service());
+
+        $service = $view->getServices();
+        $this->assertInstanceOf('\Phalcon\Mvc\View', $service());
     }
 }

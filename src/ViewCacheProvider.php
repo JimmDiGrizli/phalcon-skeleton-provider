@@ -23,7 +23,7 @@ class ViewCacheProvider implements Provider
          * @var $moduleConfig Config
          */
         $moduleConfig = $options->get('modules')->get($module);
-        $this->options = $moduleConfig->get('config')->get('voltCache');
+        $this->options = $moduleConfig->get('config')->get('viewCache');
     }
 
     /**

@@ -34,7 +34,7 @@ class ViewProvider implements Provider
          */
         $moduleConfig = $options->get('modules')->get($module);
         $moduleClass = substr($options->get('bootstrap')->get('module'), 0, -4);
-        $this->options = $moduleConfig->get('config')->get('volt');
+        $this->options = $moduleConfig->get('config')->get('view');
         $this->class = $moduleConfig->get('namespace') . '\\' . $moduleClass;
     }
 
