@@ -63,7 +63,7 @@ class ViewProvider implements Provider
                             'compiledSeparator' => '_',
                         ];
 
-                        if ($config->get('debug') != 1) {
+                        if ($config->get('debug') == true) {
                             $options['compileAlways'] = true;
                         }
 
