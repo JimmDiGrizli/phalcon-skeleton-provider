@@ -12,9 +12,9 @@
     ],
     "require": {
         "php": ">=5.4",
-        "ext-phalcon": ">=1.2.4,<2",
+        "ext-phalcon": ">=1.2.4",
 
-        "getsky/phalcon-autoload-services": "1.1.x",
+        "getsky/phalcon-autoload-services": "1.1.*",
         "getsky/phalcon-config-loader": ">1.0.0",
         "getsky/phalcon-bootstrap": ">1.2.0"
     },
