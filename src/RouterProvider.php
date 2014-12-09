@@ -39,7 +39,6 @@ class RouterProvider implements Provider
             $router->setUriSource(Router::URI_SOURCE_SERVER_REQUEST_URI);
 
             foreach ($modules as $name => $module) {
-
                 if ($default == $name) {
                     $router->setDefaultModule($default);
                     continue;
